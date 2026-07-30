@@ -1,0 +1,115 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-app-html
+  namespace: demo
+  labels:
+    app: demo-app
+    managed-by: harness-gitops
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <title>Harness GitOps POC</title>
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          background: linear-gradient(135deg, #0d0d0d 0%, #1a1a2e 50%, #16213e 100%);
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+        }
+        .card {
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 16px;
+          padding: 48px 60px;
+          text-align: center;
+          max-width: 520px;
+          backdrop-filter: blur(10px);
+        }
+        .badge {
+          display: inline-block;
+          background: linear-gradient(90deg, #00ade4, #0063f7);
+          border-radius: 20px;
+          padding: 6px 18px;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          margin-bottom: 24px;
+        }
+        h1 { font-size: 2rem; font-weight: 700; margin-bottom: 12px; }
+        .subtitle {
+          color: rgba(255,255,255,0.6);
+          font-size: 1rem;
+          line-height: 1.6;
+          margin-bottom: 32px;
+        }
+        .info-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          margin-top: 24px;
+        }
+        .info-item {
+          background: rgba(255,255,255,0.05);
+          border-radius: 8px;
+          padding: 14px;
+          border: 1px solid rgba(255,255,255,0.08);
+        }
+        .info-label { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .info-value { font-size: 14px; font-weight: 600; margin-top: 4px; color: #00ade4; }
+        .status { 
+          display: inline-flex; align-items: center; gap: 8px;
+          margin-top: 28px;
+          background: rgba(34, 197, 94, 0.1);
+          border: 1px solid rgba(34, 197, 94, 0.3);
+          border-radius: 20px;
+          padding: 8px 20px;
+          font-size: 13px;
+          color: #22c55e;
+        }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+      </style>
+    </head>
+    <body>
+      <div class="card">
+        <div class="badge">🚀 Harness GitOps</div>
+        <h1>POC Demo App</h1>
+        <p class="subtitle">
+          This app was deployed via <strong>Harness CD GitOps</strong>
+          on a local <strong>kind cluster</strong>. Any change pushed
+          to Git is automatically synced here.
+        </p>
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="info-label">Environment</div>
+            <div class="info-value">Local Dev</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Cluster</div>
+            <div class="info-value">kind-local</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Namespace</div>
+            <div class="info-value">demo</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Version</div>
+            <div class="info-value">v1.0</div>
+          </div>
+        </div>
+        <div class="status">
+          <span class="dot"></span>
+          Synced &amp; Healthy via GitOps
+        </div>
+      </div>
+    </body>
+    </html>

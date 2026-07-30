@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Point to the base manifests
+bases:
+  - ../../base
+
+# Dev-specific overrides
+namePrefix: ""
+namespace: demo
+
+# Patch: scale down replicas in dev to save local resources
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+    target:
+      kind: Deployment
+      name: demo-app
+
+# Dev-specific labels
+commonLabels:
+  environment: dev
+  tier: frontend
