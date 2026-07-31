@@ -8,12 +8,9 @@ metadata:
     managed-by: harness-gitops
 spec:
   # Access the app with:  kubectl port-forward svc/demo-app 8080:80 -n demo
-  type: NodePort
+  type: ClusterIP
   selector:
     app: demo-app
   ports:
-    - name: http
-      protocol: TCP
-      port: 80
-      targetPort: 80
-      nodePort: 30080
+    - port: 80
+      targetPort: 8080
