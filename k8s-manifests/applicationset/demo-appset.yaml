@@ -1,0 +1,45 @@
+# applicationset/demo-appset.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo-appset
+  namespace: harness-gitops
+spec:
+  generators:
+    - list:
+        elements:
+          - env: dev
+            namespace: demo-dev
+            replicas: "1"
+            path: k8s-manifests/overlays/dev
+          - env: staging
+            namespace: demo-staging
+            replicas: "2"
+            path: k8s-manifests/overlays/staging
+          - env: prod
+            namespace: demo-prod
+            replicas: "3"
+            path: k8s-manifests/overlays/prod
+
+  template:
+    metadata:
+      # Each application gets a unique name
+      name: "demo-app-{{env}}"
+      labels:
+        app.kubernetes.io/managed-by: harness-gitops
+        environment: "{{env}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/ayush-anand-avyka/Harness-GitOps-POC.git
+        targetRevision: main
+        path: "{{path}}"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{namespace}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
